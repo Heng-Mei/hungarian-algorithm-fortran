@@ -207,8 +207,6 @@ Worker 3 -> Job 3
 | `HUNGARIAN_OK` | 0 | 成功 |
 | `HUNGARIAN_ERR_INVALID` | 1 | 无效输入（n < 0、矩阵含 NaN/Inf、空指针） |
 | `HUNGARIAN_ERR_ALLOC` | 2 | 内存分配失败 |
-| `HUNGARIAN_ERR_NO_CONVERGE` | 3 | 算法在迭代上限内未收敛 |
-| `HUNGARIAN_ERR_NO_MATCH` | 4 | 未找到完美匹配 |
 
 ## 算法
 

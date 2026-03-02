@@ -207,8 +207,6 @@ Worker 3 -> Job 3
 | `HUNGARIAN_OK`               | 0     | Success                                                 |
 | `HUNGARIAN_ERR_INVALID`      | 1     | Invalid input (n < 0, NaN/Inf in matrix, null pointer)  |
 | `HUNGARIAN_ERR_ALLOC`        | 2     | Memory allocation failure                               |
-| `HUNGARIAN_ERR_NO_CONVERGE`  | 3     | Algorithm did not converge within iteration limit       |
-| `HUNGARIAN_ERR_NO_MATCH`     | 4     | Perfect matching not found                              |
 
 ## Algorithm
 

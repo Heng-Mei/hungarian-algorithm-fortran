@@ -44,13 +44,9 @@ module hungarian_mod
    !   0 = success
    !   1 = invalid input (n < 0, NaN/Inf in cost matrix)
    !   2 = allocation failure
-   !   3 = algorithm did not converge within iteration limit
-   !   4 = perfect matching not found (should not occur for valid input)
    integer, parameter, public :: HUNGARIAN_OK              = 0
    integer, parameter, public :: HUNGARIAN_ERR_INVALID     = 1
    integer, parameter, public :: HUNGARIAN_ERR_ALLOC       = 2
-   integer, parameter, public :: HUNGARIAN_ERR_NO_CONVERGE = 3
-   integer, parameter, public :: HUNGARIAN_ERR_NO_MATCH    = 4
 
 contains
 
@@ -263,8 +259,6 @@ contains
    !                  0 = success (HUNGARIAN_OK)
    !                  1 = invalid input (HUNGARIAN_ERR_INVALID)
    !                  2 = allocation failure (HUNGARIAN_ERR_ALLOC)
-   !                  3 = no convergence (HUNGARIAN_ERR_NO_CONVERGE)
-   !                  4 = no perfect matching (HUNGARIAN_ERR_NO_MATCH)
    ! ==================================================================
    subroutine hungarian_algorithm(cost_matrix, assignments, total_cost, info)
       implicit none
@@ -385,14 +379,6 @@ contains
          end do
       end do
 
-      ! Check convergence (C-3)
-      if (iteration >= max_iter .and. num_lines /= n) then
-         info = HUNGARIAN_ERR_NO_CONVERGE
-         assignments = 0
-         total_cost = 0.0_f64
-         deallocate(matrix, zeros_bool, lines_rows, lines_cols)
-         return
-      end if
 
       ! --- Step 5: Final Assignment ---
       zeros_bool = (abs(matrix) <= tol)
@@ -404,13 +390,6 @@ contains
          return
       end if
 
-      ! Validate perfect matching (H-1)
-      if (count(assignments /= 0) /= n) then
-         info = HUNGARIAN_ERR_NO_MATCH
-         total_cost = 0.0_f64
-         deallocate(matrix, zeros_bool, lines_rows, lines_cols)
-         return
-      end if
 
       ! Calculate Total Cost based on original matrix
       total_cost = 0.0_f64
